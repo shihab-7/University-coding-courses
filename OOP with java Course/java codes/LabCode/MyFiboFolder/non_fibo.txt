@@ -1,0 +1,18 @@
+Non-fibonacci numbers  : 6 
+Non-fibonacci numbers  : 7 
+
+
+Given:
+
+Roll number: 43
+
+Data = ((37×43)+73) mod 128 + 128
+	= (1591+73) mod 128 + 128
+	= 1664 mod 128 + 128
+	= 0 + 128
+	= 128
+
+So, the Data value for roll number 43 is 128.
+
+Convert 128 to binary:
+128 = 10000000
