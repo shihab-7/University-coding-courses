@@ -4,7 +4,7 @@
 *.exe
 *.bin
 *.class
-built/
+build/
 nbproject/
 test/
 build.xml
