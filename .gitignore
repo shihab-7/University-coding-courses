@@ -1,0 +1,11 @@
+
+.cph/
+.vscode/
+*.exe
+*.bin
+*.class
+built/
+nbproject/
+test/
+build.xml
+manifest.mf
