@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container p-5" style="max-width: 600px; margin: auto;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>Register</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="mb-3">
+                        {{ field|as_crispy_field }}
+                    </div>
+                {% endfor %}
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container p-2">
+    {% if messages %}
+        {% for m in messages %}
+            <h4 class="text-{{ m.tags }} bg-white text-center p-1" style="border-radius: 7px;">
+                {{ m }}
+            </h4>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="container d-flex flex-wrap mt-5 p-5">
+    <div class="col-12 col-md-8 mx-auto">
+        <h5 class="text-center p-2" style="background-color: white; border-radius: 8px;">
+            Welcome to your profile <b style="color: blue">{{ user.first_name }}</b>
+        </h5>
+    </div>
+    <hr style="height: 5px; background-color: white" />
+
+    <div class="col-12">
+        <h3 class="text-warning mx-2">Activity History:</h3>
+        <div class="container">
+            <div class="col-12 d-flex flex-wrap mx-2">
+                {% if book_details %}
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Book Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Balance After Transaction</th>
+                                <th scope="col">Activity</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% for b in book_details %}
+                                <tr>
+                                    <td>{{ b.book.id }}</td>
+                                    <td>{{ b.book.title }}</td>
+                                    <td>{{ b.book.price }}</td>
+                                    <td>
+                                        <ul>
+                                            {% for d in b.each_detail %}
+                                                <li>{{ d.balance_after_transaction }} tk</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{% url 'return' b.book.id %}">Return</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h1 class="btn btn-primary">You have an empty vault</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

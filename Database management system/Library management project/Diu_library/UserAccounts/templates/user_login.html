@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{%load static%}
+{% load crispy_forms_tags %}
+
+<div class="container p-5" style="width:50%; margin:auto;">
+
+    <div class="container2 p-2">
+        {%if messages%}
+            {%for m in messages%}
+            <h4 class="text-{{m.tags}} bg-white text-center p-1" style="border-radius:7px;">{{m}}</h4>
+            {%endfor%}
+        {%endif%}
+    </div>
+
+    <div class="card text-center m-5 p-3">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+            <h5 class="card-title">Provide Information To Login</h5>
+            <form class="p-2" method="post" style="width:50%;margin:auto;">
+                <!--{{form | crispy}}-->
+                {% csrf_token %}
+                {% for i in form %}
+                    {{i.label}}
+                    {{i}}
+                    {{i.errors}}
+                {% endfor %}
+                <button class="btn btn-warning m-2">Login</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{%endblock%}

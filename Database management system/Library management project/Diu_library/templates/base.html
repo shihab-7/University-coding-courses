@@ -1,0 +1,74 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIU Library</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'homepage' %}"><h1 class="tag-text">DIU Library</h1></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'login' %}">Log in</a>
+              </li>
+              <li class="nav-item">
+                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                  {%csrf_token%}
+                  <button class="nav-link active" type="submit">Log out</button>
+                </form>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'register' %}">Register</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <!-- Main Content -->
+    <div class="content flex-fill">
+        {% block content %}
+        <div class="container mt-5">
+            <h2>Welcome to DIU Library</h2>
+            <p>Your gateway to knowledge and resources.</p>
+            <!-- Add more content here -->
+        </div>
+        {% endblock %}
+    </div>
+
+    <footer class="footer bg-dark text-white text-center mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="footer-title">Developed By Shihab <sup>&copy; 2024</sup></h5>
+                    <p class="footer-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="{%url 'homepage'%}" class="btn design-btn">Go somewhere</a>
+                    <h4 class="tag-text">Knowledge is power</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

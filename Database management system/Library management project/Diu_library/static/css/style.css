@@ -1,0 +1,60 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+body{
+    background:linear-gradient(-45deg, rgb(178, 250, 89),rgb(137, 57, 249));
+    background-repeat: no-repeat;
+}
+
+nav{
+    background-color: black;
+}
+.tag-text{
+    color: rgb(247, 77, 10);
+}
+.book-cards{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 5px;
+}
+section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    background: linear-gradient(180deg, rgba(2, 0, 2, 0.933), rgba(13, 13, 230, 0.788));
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 10px;
+    bottom: 0;
+    width: 100%;
+    position:fixed;
+}
+
+.content {
+    padding: 20px;
+}
+
+.footer-title {
+    margin-bottom: 10px; 
+}
+
+.footer-text {
+    margin-bottom: 15px;
+}
+.design-btn{
+    background-color: rgb(0, 255, 170);
+    border-radius: 7px;
+    font-weight: bold;
+    color: black;
+}
+
+
+@media screen and (max-width:576px){
+    .book-cards{
+        grid-template-columns: repeat(1,1fr);
+    }
+}
