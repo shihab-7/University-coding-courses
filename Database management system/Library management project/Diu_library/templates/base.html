@@ -24,22 +24,30 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="gap:10px">
+              {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="{% url 'login' %}">Log in</a>
+                <a class=" nav-link active btn btn-primary btn-block" aria-current="page" href="{% url 'profile' %}">Profile</a>
               </li>
               <li class="nav-item">
                 <form method="POST" action="{% url 'logout' %}" style="display:inline;">
                   {%csrf_token%}
-                  <button class="nav-link active" type="submit">Log out</button>
+                  <button class="nav-link active btn btn-danger btn-block" type="submit">Log out</button>
                 </form>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'register' %}">Register</a>
+                <a href="{% url 'deposite'%}" style="text-decoration:none;">
+                  <h5 class="text-info">Deposite</h5>
+                </a>
               </li>
+              {%else%}
+              <li class="nav-item">
+                <a class="nav-link active btn btn-success btn-block" href="{% url 'login' %}">Log in</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active btn btn-info btn-block text-dark" href="{% url 'register' %}">Register</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>

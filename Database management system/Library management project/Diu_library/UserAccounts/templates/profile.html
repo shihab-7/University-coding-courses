@@ -15,7 +15,7 @@
 <div class="container d-flex flex-wrap mt-5 p-5">
     <div class="col-12 col-md-8 mx-auto">
         <h5 class="text-center p-2" style="background-color: white; border-radius: 8px;">
-            Welcome to your profile <b style="color: blue">{{ user.first_name }}</b>
+            Welcome to your profile <b style="color: blue">{{ user.first_name }} <span style="color:orangered;">Current Balance : {{user.account.balance}} tk</span></b>
         </h5>
     </div>
     <hr style="height: 5px; background-color: white" />

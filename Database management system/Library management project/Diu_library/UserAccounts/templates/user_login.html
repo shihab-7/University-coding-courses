@@ -17,17 +17,20 @@
         <div class="card-header">Login</div>
         <div class="card-body">
             <h5 class="card-title">Provide Information To Login</h5>
-            <form class="p-2" method="post" style="width:50%;margin:auto;">
-                <!--{{form | crispy}}-->
-                {% csrf_token %}
-                {% for i in form %}
-                    {{i.label}}
-                    {{i}}
-                    {{i.errors}}
-                {% endfor %}
-                <button class="btn btn-warning m-2">Login</button>
-            </form>
-
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="mb-3">
+                            {{ field|as_crispy_field }}
+                        </div>
+                    {% endfor %}
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

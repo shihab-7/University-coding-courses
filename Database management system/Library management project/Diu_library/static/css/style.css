@@ -1,5 +1,5 @@
 html, body {
-    height: 100%;
+    height: auto !important;
     margin: 0;
 }
 body{
@@ -31,7 +31,7 @@ section{
     margin-top: 10px;
     bottom: 0;
     width: 100%;
-    position:fixed;
+    position:static;
 }
 
 .content {
@@ -51,6 +51,7 @@ section{
     font-weight: bold;
     color: black;
 }
+
 
 
 @media screen and (max-width:576px){

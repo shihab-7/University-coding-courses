@@ -44,7 +44,7 @@ class DepositeMoneyView(TransactionCreateMixin):
         return initial
     
     def form_valid(self, form):
-        amount = self.cleaned_data.get('amount')
+        amount = form.cleaned_data.get('amount')
         account = self.request.user.account
         account.balance += amount
 
