@@ -15,7 +15,7 @@
 <div class="container d-flex flex-wrap mt-5 p-5">
     <div class="col-12 col-md-8 mx-auto">
         <h5 class="text-center p-2" style="background-color: white; border-radius: 8px;">
-            Welcome to your profile <b style="color: blue">{{ user.first_name }} <span style="color:orangered;">Current Balance : {{user.account.balance}} tk</span></b>
+            Welcome to your profile <b style="color: blue">{{ user.first_name }} <span style="color:orangered;">Current Balance : {{user.account.balance}} taka</span></b>
         </h5>
     </div>
     <hr style="height: 5px; background-color: white" />
@@ -31,8 +31,7 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Book Name</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Balance After Transaction</th>
-                                <th scope="col">Activity</th>
+                                <th scope="col">Borrow History</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -45,7 +44,7 @@
                                     <td>
                                         <ul>
                                             {% for d in b.each_detail %}
-                                                <li>{{ d.balance_after_transaction }} tk</li>
+                                                <li>{{ d.timestamp }}</li>
                                             {% endfor %}
                                         </ul>
                                     </td>

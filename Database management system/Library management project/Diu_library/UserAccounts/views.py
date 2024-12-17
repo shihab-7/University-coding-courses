@@ -32,7 +32,7 @@ class UserLoginView(LoginView):
 @method_decorator(login_required, name='dispatch')
 class UserLogoutView(LogoutView):
     def get_success_url(self):
-        return reverse_lazy('profile')
+        return reverse_lazy('homepage')
 
 @method_decorator(login_required, name='dispatch')
 class UserProfileView(View):

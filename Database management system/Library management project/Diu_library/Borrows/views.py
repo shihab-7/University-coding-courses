@@ -61,7 +61,7 @@ def borrow_view(request,id):
 
     if book.price > user_account.balance:
         messages.error(request,'You do not have enough Money')
-        return redirect('homepage')
+        return redirect('profile')
     else:
         user_account.balance -= book.price
         user_account.save()
@@ -75,6 +75,7 @@ def borrow_view(request,id):
 
         messages.success(request,'Book borrowed successfully')
         book.borrowing_users.add(user)
+        return redirect('profile')
 
 
 @login_required

@@ -9,3 +9,4 @@ nbproject/
 test/
 build.xml
 manifest.mf
+**/gitrepo.txt

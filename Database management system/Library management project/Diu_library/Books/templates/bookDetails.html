@@ -6,10 +6,10 @@
     <div class="col-12 m-2">
         <div class="card mx-2">
             <div class="card-body">
-                <img src="{{book.image.url }}" class="card-img-top" alt="book image" style="width:45%;">
+                <img src="{{book.image.url }}" class="card-img-top" alt="book image" style="width:15%;">
                 <h5>Title : {{book.title}}</h5>
                 <h6>Description : {{book.Description}}</h6>
-                <h6>Borrowing Price : {{book.price}}$</h6>
+                <h6>Borrowing Price : <b style="color:#FF5733">{{book.price}}</b> taka</h6>
                 <p>
                 Categories :
                 {% for c in book.category.all %}

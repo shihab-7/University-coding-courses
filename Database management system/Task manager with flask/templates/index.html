@@ -1,0 +1,65 @@
+{%extends 'base.html'%}
+
+{% block content %}
+
+<section class="structure">
+
+    <div class="contents">
+        <h1>Task Manager</h1>
+        {% if tasks|length < 1 %}
+        <h4 style="text-align: center; color:white;margin-top:20px;">Task list is empty . Create one below ! </h4>
+        
+        {% else %}
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Added</th>
+                <th scope="col">Action</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for t in tasks  %}
+              <tr>
+                {% if t.is_done %}
+
+                <th scope="row" ><p class="Task-done">{{t.content}}</p></th>
+                <td class="Added">{{t.date_created.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                <td>
+                    <a class="btn btn-danger text-white" href="/delete/{{t.id}}">Delete</a>
+                </td>
+                <td class="Status">
+                    <button class="btn btn-secondary">Done</button>
+                </td>
+                
+                {% else %}
+                <th scope="row" class="Task">{{t.content}}</th>
+                <td class="Added">{{t.date_created.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                <td>
+                    <a class="btn btn-danger text-white" href="/delete/{{t.id}}">Delete</a>
+                    <br>
+                    <a class="btn btn-primary mt-3 text-white" href="/update/{{t.id}}">Update</a>
+                </td>
+                <td>
+                    <form action="/mark_as_done/{{t.id}}" method="POST" style="display:inline;">
+                        <button class="btn btn-warning">Mark As Done</button>
+                    </form>
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+          <div class="form-container">
+            <form action="/" method="POST" class="form">
+                <label for="content" class="form-label">Task:</label>
+                <input type="text" name="content" id="content" class="form-input" placeholder="Enter your task">
+                <input type="submit" value="Add Task" class="form-button">
+            </form>
+        </div>
+        
+    </div>
+</section>
+{% endblock  %}

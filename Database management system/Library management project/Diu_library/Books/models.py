@@ -9,6 +9,7 @@ class Book(models.Model):
     description = models.TextField(max_length=300)
     image = models.ImageField(upload_to='books/', blank=True, null=True)
     borrowing_users = models.ManyToManyField(User, related_name='borrow_history',blank=True)
+    price = models.DecimalField(max_digits=4 , decimal_places= 2,default=0)
 
     def __str__(self) -> str:
         return f'Book Title : {self.title}'
