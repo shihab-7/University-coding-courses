@@ -27,23 +27,22 @@
                 <th scope="row" ><p class="Task-done">{{t.content}}</p></th>
                 <td class="Added">{{t.date_created.strftime('%Y-%m-%d %H:%M:%S')}}</td>
                 <td>
-                    <a class="btn btn-danger text-white" href="/delete/{{t.id}}">Delete</a>
+                    <a class="btnD" href="/delete/{{t.id}}">Delete</a>
                 </td>
                 <td class="Status">
-                    <button class="btn btn-secondary">Done</button>
+                    <button class="btnM " style="{%if t.is_done%} background:black;color:white;{%endif%}" disabled>Done</button>
                 </td>
                 
                 {% else %}
                 <th scope="row" class="Task">{{t.content}}</th>
                 <td class="Added">{{t.date_created.strftime('%Y-%m-%d %H:%M:%S')}}</td>
                 <td>
-                    <a class="btn btn-danger text-white" href="/delete/{{t.id}}">Delete</a>
-                    <br>
-                    <a class="btn btn-primary mt-3 text-white" href="/update/{{t.id}}">Update</a>
+                    <a class="btnD" href="/delete/{{t.id}}">Delete</a>
+                    <a class="btnE" href="/update/{{t.id}}">Update</a>
                 </td>
                 <td>
-                    <form action="/mark_as_done/{{t.id}}" method="POST" style="display:inline;">
-                        <button class="btn btn-warning">Mark As Done</button>
+                    <form action="/mark_as_done/{{t.id}}" method="POST">
+                        <button class="btnM">Mark As Done</button>
                     </form>
                 </td>
               </tr>

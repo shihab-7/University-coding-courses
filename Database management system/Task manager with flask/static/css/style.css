@@ -15,7 +15,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(45deg, rgb(0, 0, 0), rgb(45, 130, 166));
+    background: linear-gradient(to top, rgba(45, 109, 238, 0.978), rgb(0, 0, 0));
     flex-wrap: wrap;
     padding: 10px;
 }
@@ -28,6 +28,7 @@ body{
     width: 100%;
     table-layout: fixed;
     border-collapse:collapse;
+    margin-top: 10px;
 }
 
 .table th, .table td{
@@ -37,28 +38,33 @@ body{
     text-overflow: ellipsis;
     white-space: normal;
     word-wrap: break-word;
-    border: 2px solid white;
+    border: 3px dotted rgb(134, 255, 115);
     padding: 10px;
     font-size: 20px;
     font-weight: 500;
 }
 .Task{
-    color:rgb(3, 236, 240);
+    color:rgb(247, 239, 239);
     font-size: 20px;
+    font-weight: bold;
+    text-shadow: rgb(9, 9, 9) 0px 3px 5px;
 }
-.Added{
-    color: antiquewhite;
-    font-size: 15px;
+table .Added{
+    color: rgb(254, 255, 255);
+    font-size: 14px;
 }
 .Task-done{
-    text-decoration: line-through;
-    text-decoration-color: black;
-    color: white;
+    text-decoration:line-through underline;
+    text-decoration-color: rgb(255, 1, 1);
+    color: rgb(255, 254, 248);
     text-overflow: hidden;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: rgb(9, 9, 9) 0px 3px 5px;
 }
 thead{
     text-align: center;
-    color: yellow;
+    color: rgb(14, 219, 255);
 }
 
 .form-container {
@@ -114,4 +120,31 @@ thead{
 
 .form-button:hover {
     background-color: #000000;
+}
+.btnD, .btnE, .btnM{
+    padding: 5px;
+    text-decoration: none;
+    color: whitesmoke;
+    border-radius: 5px;
+   
+}
+
+.btnD{
+    background-color: rgb(255, 0, 0);
+    box-shadow: 5px 4px 3px rgb(12, 12, 12);
+}
+.btnE{
+    background-color: rgb(190, 13, 244);
+    box-shadow: 5px 4px 3px rgb(12, 12, 12);
+}
+.btnM{
+    background-color: #000000;
+    box-shadow: 5px 4px 3px rgb(226, 226, 226);
+}
+.btnD:hover, .btnE:hover{
+    color: rgb(0, 0, 0);
+}
+.btnM:hover{
+    color: #000000;
+    background: whitesmoke;
 }
