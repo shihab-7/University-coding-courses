@@ -1,0 +1,28 @@
+;builtin loop
+
+
+INCLUDE "EMU8086.INC"
+.MODEL SMALL
+.STACK 100H
+.DATA
+
+MSG DB "HELLO$"
+
+.CODE
+MAIN PROC
+    
+    MOV AX, @DATA
+    MOV DS, AX
+    
+    MOV CX,5
+    MOV AH,9
+    LEA DX, MSG
+START:
+    INT 21H
+    
+    ;BUILTIN NEWLINE FUNCTION
+    PRINTN " "
+    LOOP START
+        
+    MAIN ENDP
+END MAIN
