@@ -1,0 +1,4 @@
+resources : 
+https://docs.google.com/document/d/1oXRRhUVEtwZ5Wzx3lO3DQZ3AwNd2WIb-KWy1UTQItSA/edit?usp=sharing
+
+setup and basics of cpp like structure, variable naming, data types etc.
