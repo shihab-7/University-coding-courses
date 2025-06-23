@@ -103,6 +103,31 @@ body {
   list-style-type: disc;
 }
 
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+body.dark-mode .cv-container {
+  background-color: #2b2b2b;
+}
+body.dark-mode .right-panel h2,
+body.dark-mode .section h4 {
+  color: #00bcd4;
+}
+body.dark-mode .left-panel {
+  background-color: #1a252f;
+}
+body.dark-mode .left-panel h2,
+body.dark-mode .left-panel h3 {
+  color: #00bcd4;
+}
+body.dark-mode .right-panel p,
+body.dark-mode .left-panel p ,
+body.dark-mode .left-panel ul li,
+body.dark-mode .right-panel ul li {
+  color: antiquewhite;
+}
+
 @media (max-width: 768px) {
   .cv-container {
     flex-direction: column;
