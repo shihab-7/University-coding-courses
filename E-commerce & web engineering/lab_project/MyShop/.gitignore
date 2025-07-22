@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+env/
+venv/
+.env
+.venv
+*.log
+*.pot
+*.pyc
+migrations/**/__pycache__/
+migrations/*.pyc
+.vscode/
