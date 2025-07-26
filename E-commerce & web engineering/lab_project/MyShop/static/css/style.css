@@ -510,7 +510,10 @@ section {
 
 .footer {
     background: var(--color);
-
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .footer .box-container {

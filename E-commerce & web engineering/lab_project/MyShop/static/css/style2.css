@@ -1,0 +1,118 @@
+
+/* --- Responsive & Polished Styles for User Templates --- */
+.container {
+    max-width: 600px;
+    margin: 8rem auto 2rem auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 2.5rem 2rem;
+}
+
+.container h2, .container h3 {
+    text-align: center;
+    color: #941d57;
+    margin-bottom: 1.5rem;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.container input[type="text"],
+.container input[type="email"],
+.container input[type="password"],
+.container button, .container select {
+    padding: 0.8rem 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1.5rem;
+}
+
+.container button, .container .btn {
+    background: #941d57;
+    color: #fff;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s;
+}
+.container button:hover, .container .btn:hover {
+    background: #222;
+}
+
+.messages {
+    margin: 1rem 0;
+    padding: 0;
+    list-style: none;
+}
+.messages li {
+    background: #ffe0e6;
+    color: #941d57;
+    padding: 0.7rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+/* Cart Table */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+.cart-table th, .cart-table td {
+    border: 1px solid #eee;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.cart-table th {
+    background: #f9f9f9;
+    color: #941d57;
+}
+.cart-summary {
+    text-align: right;
+    margin-top: 1rem;
+}
+.cart-summary h3 {
+    color: #222;
+    font-size: 2rem;
+}
+
+/* Profile Liked Products */
+.container ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.container ul li {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 700px) {
+    .container {
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem;
+    }
+    .cart-table th, .cart-table td {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+    }
+    .cart-summary h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        margin: 7rem 0.2rem 1rem 0.2rem;
+        padding: 0.5rem 0.2rem;
+    }
+    .container h2, .container h3 {
+        font-size: 1.5rem;
+    }
+}

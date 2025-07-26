@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Welcome, {{ user.username }}</h2>
+    <h3>Your Profile</h3>
+    <p>Email: {{ user.email }}</p>
+    <p>Date joined: {{ user.date_joined }}</p>
+    <h3>Liked Products</h3>
+    {% if liked_products %}
+        <ul>
+        {% for product in liked_products %}
+            <li>{{ product.name }} - ${{ product.price }}</li>
+            <li>
+                <form method="post" action="{% url 'toggle_like_product' product.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="like-btn fas fa-heart" style="background:none; border:none; cursor:pointer; color:#e74c3c; font-size:2rem;" title="{% if product in liked_products %}Unlike{% else %}Like{% endif %}">
+                    {% if product in liked_products %}Unlike{% else %}Like{% endif %}
+                    </button>
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't liked any products yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
