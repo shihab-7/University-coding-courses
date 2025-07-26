@@ -13,7 +13,7 @@ int count = 0;
 
 int yywrap(){}
 int main(){
-    
+      
 yylex();
 printf("\nNumber of Capital letters " 
       "in the given input - %d\n", count);
