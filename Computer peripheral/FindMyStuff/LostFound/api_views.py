@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import LostItem, Claim
 from django.shortcuts import get_object_or_404
 from .utils import generate_otp
+from users.validators import validate_student_id
 
 @api_view(['POST'])
 def verify_mcq(request,item_id):
@@ -13,6 +14,13 @@ def verify_mcq(request,item_id):
     ans1 = data.get('answer_1')
     ans2 = data.get('answer_2')
     student_id = data.get('student_id')
+
+    # Validate student ID format first
+    if not student_id:
+        return Response({"error": "Student ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not validate_student_id(student_id):
+        return Response({"error": "Invalid student ID format. Expected format: XX-X-XX-XX-XXXXXX (e.g., CS-A-21-02-123456)"}, status=status.HTTP_400_BAD_REQUEST)
 
     if ans1 == item.mcq_1_answer_correct and ans2 == item.mcq_2_answer_correct:
 

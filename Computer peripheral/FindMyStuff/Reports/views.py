@@ -17,4 +17,4 @@ def report_issue(request, item_id):
             return redirect('home')
     else:
         form = ReportForm()
-    return render(request, 'report_issue.html', {'form': form, 'item': item})
+    return render(request, 'report.html', {'form': form, 'item': item})

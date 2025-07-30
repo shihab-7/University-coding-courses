@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container p-2">
+    {% if messages %}
+        {% for m in messages %}
+            <h4 class="text-{{ m.tags }} bg-white text-center p-1" style="border-radius: 7px;">
+                {{ m }}
+            </h4>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="container d-flex flex-wrap mt-5 p-5">
+    <div class="col-12 col-md-8 mx-auto">
+        <h5 class="text-center p-2" style="background-color: white; border-radius: 8px;">
+            Welcome to your profile <b style="color: blue">{{ user.first_name }}</span></b>
+        </h5>
+    </div>
+    <hr style="height: 5px; background-color: white" />
+
+    <div class="col-12">
+        <h3 class="text-warning mx-2">Cart History:</h3>
+        <div class="container">
+            <div class="col-12 d-flex flex-wrap mx-2">
+                {% if cart_items %}
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Added At</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% for item in cart_items %}
+                                <tr>
+                                    <td>{{ item.product.title }}</td>
+                                    <td>{{ item.product.price }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>{{ item.added_at }}</td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{% url 'remove_from_cart' item.product.id %}">Remove Item</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h1 class="btn btn-primary">Your Cart is empty</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

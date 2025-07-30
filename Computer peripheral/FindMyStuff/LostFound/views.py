@@ -4,8 +4,12 @@ from .utils import shuffle_options
 
 # Create your views here.
 def home(request):
-    items = LostItem.objects.filter(status='Unclaimed')
-    return render(request, 'home.html', {'items': items})
+    unclaimed_items = LostItem.objects.filter(status='Unclaimed')
+    resolved_items = LostItem.objects.filter(status='Resolved')
+    return render(request, 'home.html', {
+        'unclaimed_items': unclaimed_items, 
+        'resolved_items': resolved_items
+    })
 
 def post_item(request):
     if request.method == 'POST':
