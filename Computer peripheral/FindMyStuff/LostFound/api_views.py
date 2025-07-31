@@ -11,7 +11,7 @@ def verify_mcq(request,item_id):
     item = get_object_or_404(LostItem, id=item_id)
     data = request.data
 
-    ans1 = data.get('answer_1')
+    ans1 = data.get('answer_1')  
     ans2 = data.get('answer_2')
     student_id = data.get('student_id')
 
