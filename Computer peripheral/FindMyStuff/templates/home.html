@@ -23,12 +23,11 @@
         </div>
     {% endif %}
 
-    <h2>Recently Resolved Items ({{ resolved_items.count }})</h2>
+    <h2>Claimed Items ({{ claimed_items.count }})</h2>
     <p style="color: #666; margin-bottom: 20px;">These items have been claimed. You can report issues if needed.</p>
-    
-    {% if resolved_items %}
+    {% if claimed_items %}
         <div style="display: grid; gap: 20px;">
-            {% for item in resolved_items %}
+            {% for item in claimed_items %}
             <div class="card" style="background: #f8f9fa;">
                 <h3>{{ item.item_name }}</h3>
                 <p><strong>Description:</strong> {{ item.description|default:"No description provided" }}</p>
@@ -39,6 +38,6 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>No resolved items to display.</p>
+        <p>No claimed items to display.</p>
     {% endif %}
 {% endblock %}

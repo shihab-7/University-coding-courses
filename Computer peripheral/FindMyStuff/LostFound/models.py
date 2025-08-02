@@ -37,3 +37,16 @@ class Claim(models.Model):
 
     def __str__(self):
         return f"Claim for {self.lost_item.item_name} by {self.student_id}"
+
+
+class VaultSettings(models.Model):
+    admin_password = models.CharField(max_length=10, default="555")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Vault Admin Password"
+
+    class Meta:
+        verbose_name = 'Vault Settings'
+        verbose_name_plural = 'Vault Settings'

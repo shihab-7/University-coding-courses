@@ -6,3 +6,4 @@ class ReportAdmin(admin.ModelAdmin):
     list_display = ('lost_item', 'report_date')
     search_fields = ('lost_item__item_name',)
     ordering = ('-report_date',)
+admin.site.register(Report, ReportAdmin)

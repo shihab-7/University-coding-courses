@@ -72,6 +72,7 @@ document.getElementById('claimForm').addEventListener('submit', function(e) {
                 <p><strong>Your OTP Code: ${result.otp_code}</strong></p>
                 <p>${result.message}</p>
                 <p style="margin-top: 15px; font-weight: bold;">Go to the university vault and enter this code on the numeric pad.</p>
+                <a href="/" class="btn btn-primary" style="margin-top:20px;display:inline-block;">Back to Home</a>
             `;
             // Hide the form
             document.getElementById('verification-form').style.display = 'none';

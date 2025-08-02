@@ -5,10 +5,11 @@ from .utils import shuffle_options
 # Create your views here.
 def home(request):
     unclaimed_items = LostItem.objects.filter(status='Unclaimed')
-    resolved_items = LostItem.objects.filter(status='Resolved')
+    claimed_items = LostItem.objects.filter(status='Claimed')
+    # resolved_items are not shown anymore
     return render(request, 'home.html', {
-        'unclaimed_items': unclaimed_items, 
-        'resolved_items': resolved_items
+        'unclaimed_items': unclaimed_items,
+        'claimed_items': claimed_items
     })
 
 def post_item(request):
