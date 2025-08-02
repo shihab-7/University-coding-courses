@@ -4,12 +4,27 @@
 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
     <h1>Claim Item: {{ item.item_name }}</h1>
     
-    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-        <p><strong>Description:</strong> {{ item.description|default:"No description provided" }}</p>
-        <p><strong>Posted:</strong> {{ item.date_registered|date:"M d, Y" }}</p>
-    </div>
+    <div style="
+    background: linear-gradient(145deg, #0bd4d7ff, #9f11c2ff);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 10px rgba(45, 26, 217, 0.1), 
+                -0px -0px 15px rgba(229, 250, 5, 1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;">
+
+    <p><strong>Description:</strong> {{ item.description|default:"No description provided" }}</p>
+    <p><strong>Posted:</strong> {{ item.date_registered|date:"M d, Y" }}</p>
+</div>
+
     
-    <div id="verification-form" style="background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px;">
+    <div id="verification-form" style=" border: 1px solid #ddd;background: linear-gradient(145deg, #d4fe2bce, #f3bfbfff);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 10px rgba(45, 26, 217, 0.1), 
+                -0px -0px 15px rgba(62, 5, 250, 1); ">
+    "
         <h3>Verify Your Identity</h3>
         <p>Answer the security questions to prove you're the owner:</p>
         
@@ -18,7 +33,7 @@
             
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; font-weight: bold;">Student ID:</label>
-                <input type="text" id="student_id" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="Format: XX-X-XX-XX-XXXXXX (e.g., CS-A-21-02-123456)" pattern="[A-Z]{2}-[A-Z]-\d{2}-\d{2}-\d{6}" title="Please enter a valid student ID in format: XX-X-XX-XX-XXXXXX">
+                <input type="text" id="student_id" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="Format: XX-X-XX-XX-XXXXXX (e.g., CS-A-21-02-123456)" pattern="[A-Za-z]{2}-[A-Za-z]-\d{2}-\d{2}-\d{6}" title="Please enter a valid student ID in format: XX-X-XX-XX-XXXXXX">
                 <small style="color: #666; font-size: 12px;">Expected format: CS-A-21-02-123456</small>
             </div>
             
@@ -43,7 +58,7 @@
             </div>
             
             <button type="submit" style="background: #007bff; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Verify & Get OTP</button>
-            <a href="{% url 'home' %}" style="margin-left: 10px; color: #6c757d; text-decoration: none;">Back to Home</a>
+            <a href="{% url 'home' %}" class="btn btn-primary" style="margin-left: 10px; background: #007bff; color: white; padding: 8.5px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none;">Back to Home</a>
         </form>
     </div>
     

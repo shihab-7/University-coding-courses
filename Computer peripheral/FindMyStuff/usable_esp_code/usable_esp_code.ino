@@ -9,8 +9,8 @@ const char* ssid = "No_internet";
 const char* password = "(CSE_904)";
 
 // Server URLs
-const char* userOtpURL = "http://192.168.0.102:8000/api/esp32/verify-user-otp/";
-const char* adminPasswordURL = "http://192.168.0.102:8000/api/esp32/verify-admin-password/";
+const char* userOtpURL = "http://192.168.0.105:8000/api/esp32/verify-user-otp/";
+const char* adminPasswordURL = "http://192.168.0.105:8000/api/esp32/verify-admin-password/";
 
 Servo lock_servo1;
 Servo lock_servo2;
@@ -35,6 +35,7 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
 const int led_pin1 = 27;
 const int led_pin2 = 26;
+const int led_pin3 = 33;
 
 //password matching logics
 String enteredOTP = "";
@@ -48,27 +49,29 @@ bool is_empty = false;
 bool is_filled = false;
 
 void setup() {
-  Serial.begin(115200);
-  Serial.println("Keypad Test Ready");
+//  Serial.begin(115200);
+//  Serial.println("Keypad Test Ready");
   pinMode(led_pin1, OUTPUT);
   pinMode(led_pin2 , OUTPUT);
+  pinMode(led_pin3 , OUTPUT);
   digitalWrite(led_pin1, 0);
   digitalWrite(led_pin2, 0);
+  digitalWrite(led_pin3, 0);
   
   // Connect to WiFi
   WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi");
+//  Serial.print("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+//    Serial.print(".");
   }
-  Serial.println();
-  Serial.println("WiFi connected!");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+//  Serial.println();
+//  Serial.println("WiFi connected!");
+//  Serial.print("IP address: ");
+//  Serial.println(WiFi.localIP());
   
   //servo section
-  Serial.println("Attaching servos...");
+//  Serial.println("Attaching servos...");
   lock_servo1.attach(servoPin1);
   lock_servo2.attach(servoPin2);
 }
@@ -78,8 +81,8 @@ void loop() {
   
   //password validation
   if (key) {
-    Serial.print("Key Pressed: ");
-    Serial.println(key);
+//    Serial.print("Key Pressed: ");
+//    Serial.println(key);
     digitalWrite(led_pin1, 1);
     
     if (key >= '0' && key <= '9') 
@@ -88,12 +91,12 @@ void loop() {
       if (enteredOTP.length() < maxUserOTPLength) 
       {
         enteredOTP += key;
-        Serial.print("OTP: ");
+//        Serial.print("OTP: ");
         for (int i = 0; i < enteredOTP.length(); i++) 
         {
-          Serial.print("*");
+//          Serial.print("*");
         }
-        Serial.println();
+//        Serial.println();
         // Auto-submit only for 5-digit user OTP
         if (enteredOTP.length() == maxUserOTPLength) {
           verifyOTP(enteredOTP);
@@ -105,13 +108,13 @@ void loop() {
     else if (key == '*') 
     {
       enteredOTP = "";
-      Serial.println("OTP cleared");
+//      Serial.println("OTP cleared");
     }
     else if (key == '#') 
     {
       if (enteredOTP.length() > 0) 
       {
-        Serial.println("Submitting code: " + enteredOTP);
+//        Serial.println("Submitting code: " + enteredOTP);
         verifyOTP(enteredOTP);
         enteredOTP = "";
       }
@@ -128,11 +131,11 @@ void loop() {
   
   if(is_empty == true)
   {
-    digitalWrite(led_pin1, 1);
+    digitalWrite(led_pin3, 1);
   }
   else
   {
-    digitalWrite(led_pin1, 0);
+    digitalWrite(led_pin3, 0);
   }
   if(is_filled == true)
   {
@@ -146,7 +149,7 @@ void loop() {
 
 void open_vault()
 {
-  Serial.println("Unlocking vault for 10 seconds...");
+//  Serial.println("Unlocking vault for 10 seconds...");
   lock_servo2.write(unlock_position);
   delay(2000);
   vaultOpen = true;
@@ -155,7 +158,7 @@ void open_vault()
 }
 void close_vault()
 {
-  Serial.println("Closing vault...");
+//  Serial.println("Closing vault...");
   lock_servo1.write(close_position);
   delay(2000);
   lock_servo2.write(lock_position);
@@ -163,7 +166,7 @@ void close_vault()
 }
 void verifyOTP(String otp) {
   if (otp.length() > 0) {
-    Serial.println("Verifying code: " + otp);
+//    Serial.println("Verifying code: " + otp);
 
     if (otp.length() == 5) {
       verifyUserOTP(otp);
@@ -172,10 +175,10 @@ void verifyOTP(String otp) {
       verifyAdminPassword(otp);
     }
     else {
-      Serial.println("Invalid code length. Use 5 digits for user OTP or 3 digits for admin password.");
+//      Serial.println("Invalid code length. Use 5 digits for user OTP or 3 digits for admin password.");
     }
   } else {
-    Serial.println("Something went wrong");
+//    Serial.println("Something went wrong");
   }
 }
 
@@ -192,13 +195,13 @@ void verifyUserOTP(String otp) {
     String requestBody;
     serializeJson(doc, requestBody);
     
-    Serial.println("Verifying User OTP: " + otp);
+//    Serial.println("Verifying User OTP: " + otp);
     
     int httpResponseCode = http.POST(requestBody);
     
     if (httpResponseCode > 0) {
       String response = http.getString();
-      Serial.println("Response: " + response);
+//      Serial.println("Response: " + response);
       
       // Parse response
       DynamicJsonDocument responseDoc(1024);
@@ -209,8 +212,8 @@ void verifyUserOTP(String otp) {
         String message = responseDoc["message"];
         String itemName = responseDoc["item_name"];
         
-        Serial.println("Ok " + message);
-        Serial.println("Item: " + itemName);
+//        Serial.println("Ok " + message);
+//        Serial.println("Item: " + itemName);
         
         // User collected item
         is_empty = true;
@@ -218,15 +221,15 @@ void verifyUserOTP(String otp) {
         open_vault();
       } else {
         String error = responseDoc["error"];
-        Serial.println("User OTP: " + error);
+//        Serial.println("User OTP: " + error);
       }
     } else {
-      Serial.println("Error: HTTP " + String(httpResponseCode));
+//      Serial.println("Error: HTTP " + String(httpResponseCode));
     }
     
     http.end();
   } else {
-    Serial.println("WiFi not connected");
+//    Serial.println("WiFi not connected");
   }
 }
 
@@ -243,13 +246,13 @@ void verifyAdminPassword(String password) {
     String requestBody;
     serializeJson(doc, requestBody);
     
-    Serial.println("Verifying Admin Password: " + password);
+//    Serial.println("Verifying Admin Password: " + password);
     
     int httpResponseCode = http.POST(requestBody);
     
     if (httpResponseCode > 0) {
       String response = http.getString();
-      Serial.println("Response: " + response);
+//      Serial.println("Response: " + response);
       
       // Parse response
       DynamicJsonDocument responseDoc(1024);
@@ -259,7 +262,7 @@ void verifyAdminPassword(String password) {
         // Admin verified successfully
         String message = responseDoc["message"];
         
-        Serial.println("Ok " + message);
+//        Serial.println("Ok " + message);
         
         // Admin refilled vault
         is_empty = false;
@@ -267,14 +270,14 @@ void verifyAdminPassword(String password) {
         open_vault();
       } else {
         String error = responseDoc["error"];
-        Serial.println("Admin Password: " + error);
+//        Serial.println("Admin Password: " + error);
       }
     } else {
-      Serial.println("Error: HTTP " + String(httpResponseCode));
+//      Serial.println("Error: HTTP " + String(httpResponseCode));
     }
     
     http.end();
   } else {
-    Serial.println("WiFi not connected");
+//    Serial.println("WiFi not connected");
   }
 }

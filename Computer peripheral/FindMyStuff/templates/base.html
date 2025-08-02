@@ -10,9 +10,19 @@
     </title>
 </head>
 <body>
+    <nav class="navbar">
+    <div class="nav-container">
+        <a href="{% url 'home' %}" class="nav-brand">🏠 Home</a>
+        <button class="nav-toggle" id="navToggle">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="{% url 'post_item' %}">➕ Post Item</a>
+        </div>
+    </div>
+</nav>
+
     <div class="header">
         <div class="container">
-            <h1>Find My Stuff - University Lost & Found</h1>
+            <h1>Find My University Stuff - Lost & Found</h1>
         </div>
     </div>
 
@@ -20,5 +30,15 @@
         {% block content %}
         {% endblock %}
     </div>
+
+    <script>
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    navToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+</script>
+
 </body>
 </html>

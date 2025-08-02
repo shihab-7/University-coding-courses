@@ -72,10 +72,20 @@ document.getElementById('claimForm').addEventListener('submit', function(e) {
                 <p><strong>Your OTP Code: ${result.otp_code}</strong></p>
                 <p>${result.message}</p>
                 <p style="margin-top: 15px; font-weight: bold;">Go to the university vault and enter this code on the numeric pad.</p>
-                <a href="/" class="btn btn-primary" style="margin-top:20px;display:inline-block;">Back to Home</a>
+                <p id="countdown" style="margin-top: 15px; color: #155724;">You will be redirected to home in <span id="count">20</span> seconds.</p>
             `;
-            // Hide the form
             document.getElementById('verification-form').style.display = 'none';
+            // show countdown
+            let count = 20;
+            const countSpan = document.getElementById('count');
+            const timer = setInterval(function() {
+                count--;
+                countSpan.textContent = count;
+                if (count <= 0) {
+                    clearInterval(timer);
+                    window.location.href = '/';
+                }
+            }, 1000);
         } else {
             messageDiv.style.background = '#f8d7da';
             messageDiv.style.color = '#721c24';
