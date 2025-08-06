@@ -12,7 +12,6 @@ class UserShopAccount(models.Model):
     def __str__(self):
         return f'User Account: {self.account_no} - {self.user.username}'
     
-
 class UserAddress(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='address')
     street_address = models.CharField(max_length=255)

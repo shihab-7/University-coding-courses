@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+  .main-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 40px;
+  }
+  .container {
+    width: 420px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #aaa;
+    padding: 30px 30px 20px 30px;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #4caf50;
+  }
+  .form-group {
+    margin-bottom: 18px;
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #333;
+  }
+  input[type="text"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="password"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 9px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background: #f9f9f9;
+    transition: border-color 0.2s;
+  }
+  input:focus {
+    border-color: #4caf50;
+    outline: none;
+  }
+  .show-password {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #4caf50;
+    border: none;
+    color: white;
+    font-size: 17px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+  }
+  button:hover {
+    background: #45a049;
+  }
+  #message {
+    text-align: center;
+    color: red;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="main-wrapper">
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter a username" required>
+      </div>
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" name="firstName" placeholder="Enter your first name" required>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" name="lastName" placeholder="Enter your last name" required>
+      </div>
+      <div class="form-group">
+        <label>Birthdate</label>
+        <input type="date" name="birthdate" required>
+      </div>
+      <div class="form-group">
+        <label>Gender</label>
+        <select class="gender-options">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Street Address</label>
+        <input type="text" name="street" required>
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" name="city" required>
+      </div>
+      <div class="form-group">
+        <label>Post Code</label>
+        <input type="text" name="postcode" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Enter your email" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" required>
+        <label class="show-password">
+          <input type="checkbox" id="showPassword"> Show Password
+        </label>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" required>
+        <label class="show-password">
+          <input type="checkbox" id="showConfirmPassword"> Show Confirm Password
+        </label>
+      </div>
+      <div class="form-group">
+        <button type="submit">Register</button>
+      </div>
+    </form>
+    <p id="message"></p>
+  </div>
+</div>
+<script>
+  const showPasswordCheckbox = document.getElementById("showPassword");
+  const showConfirmPasswordCheckbox = document.getElementById("showConfirmPassword");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirmPassword");
+  if (showPasswordCheckbox && passwordInput) {
+    showPasswordCheckbox.addEventListener("change", function () {
+      passwordInput.type = this.checked ? "text" : "password";
+    });
+  }
+  if (showConfirmPasswordCheckbox && confirmPasswordInput) {
+    showConfirmPasswordCheckbox.addEventListener("change", function () {
+      confirmPasswordInput.type = this.checked ? "text" : "password";
+    });
+  }
+</script>
+
+</body>
+</html>

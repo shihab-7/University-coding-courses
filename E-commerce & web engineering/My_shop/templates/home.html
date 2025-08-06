@@ -1,60 +1,57 @@
 {% extends "base.html" %}
-{%load static%}
+{% load static %}
 
-{%block content%}
-<section style="margin-left:20px;">
+{% block content %}
+<section>
   <div class="container">
-    <h4 class="px-2 mb-3" style="color:rgb(224, 224, 44);">Filter By categories : </h4>
-    <div class=" col-12 d-flex flex-wrap">
-        {%for c in category%}
-        <div class="col-2 p-1 mx-3" style="border-radius: 7px;box-shadow:0px 1px 2px 0px rgb(253, 252, 255),
-        1px 2px 4px 0px rgba(145, 71, 241, 0.96),
-        2px 4px 8px 0px rgb(92, 66, 237),
-        2px 4px 16px 0px rgb(63, 128, 249);">
-                <div class="navbar bg-black">
-                    <div class="container justify-content-center align-items-center">
-                    <a class="navbar-brand" href="{% url 'category_filter' c.slug %}">
-                        <h6 style=" color:rgb(77, 255, 249);">{{c.category}}</h6>
-                    </a>
-                    </div>
-                  </div>
-            </div>
-            {%endfor%} 
-        </div>
-        <br/>
-        <div class="col-3 m-3">
-            <nav class="navbar bg-black"style="border-radius: 7px;">
-                <div class="px-5">
-                    <p class="m-2 text-info"><b>Found : {{ data | length }} Products </b></p>
-                </div>
-            </nav>
-        </div>
+    <h4 class="px-2 mb-3 tag-text">Filter By Categories:</h4>
+    <div class="category-filter">
+      {% for c in category %}
+      <div class="category-card">
+        <a class="navbar-brand" href="{% url 'category_filter' c.slug %}">
+          <h6>{{ c.category }}</h6>
+        </a>
+      </div>
+      {% endfor %}
+      <div class="category-card">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <h6>All Categories</h6>
+        </a>
+      </div>
     </div>
-</div>
+    <nav class="navbar bg-white shadow-sm rounded mb-3">
+      <div class="px-5">
+        <p class="m-2 text-info"><b>Found : {{ data | length }} Products </b></p>
+      </div>
+    </nav>
+  </div>
 </section>
-
-<section style="margin-bottom:10px;">
-    <div class="product-cards">
-      {%for p in data%}
-        <div class="card" style="width: 18rem;">
-            {% if p.image %}
-              <img src="{{p.image.url}}" alt="product img" style="height:260px; border-radius:7px" >
-            {% else %}
-              <img src="#" alt="No image" style="height:260px; border-radius:7px" >
-            {% endif %}
-            <div class="card-body">
-              <h4><b>Title :</b></h4> <p style="color:blue; font-weight:bold;">{{p.title | truncatewords:4}}</p>
-              <h6><b>Description :</b></h6> <p>{{p.description | truncatewords:5}}</p>
-              <h6><b>Price :</b></h6> <p style="color:#FF5733;font-weight:bold;">{{p.price}} taka</p>
-              <h6><b>Categories :</b></h6>
-              {%for c in p.category.all%} 
-              <button class="btn btn-info p-1 m-1" disabled>{{c.category}}</button>
-              {%endfor%}
-              <a class="btn btn-primary" href="{% url 'product_details' p.id %}">Details</a>
-            </div>
+<section>
+  <div class="product-cards">
+    {% for p in data %}
+    <div class="card modern-card">
+      {% if p.image %}
+      <div class="card-img-wrapper">
+        <img src="{{ p.image.url }}" alt="product img" class="card-img-top">
+      </div>
+      {% else %}
+      <div class="card-img-wrapper">
+        <img src="#" alt="No image" class="card-img-top">
+      </div>
+      {% endif %}
+      <div class="card-body">
+        <h4 class="card-title">{{ p.title | truncatewords:4 }}</h4>
+        <p class="card-desc">{{ p.description | truncatewords:5 }}</p>
+        <p class="card-price">{{ p.price }} <span class="currency">taka</span></p>
+        <div class="card-categories">
+          {% for c in p.category.all %}
+          <span class="badge bg-gradient-info m-1">{{ c.category }}</span>
+          {% endfor %}
         </div>
-        {%endfor%}
+        <a class="btn btn-primary w-100 mt-2" href="{% url 'product_details' p.id %}">View Details</a>
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </section>
-
-{%endblock%}
+{% endblock %}

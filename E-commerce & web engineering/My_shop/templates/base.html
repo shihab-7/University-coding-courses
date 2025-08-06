@@ -18,68 +18,62 @@
 <body class="d-flex flex-column min-vh-100">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark gap-5">
-        <div style="margin-left: 20px;">
-          <a class="navbar-brand" href="{% url 'home' %}"><h1 class="tag-text">My Shop</h1></a>
-        </div>
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm mb-3">
         <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="gap:10px">
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class=" nav-link active btn btn-primary btn-block" aria-current="page" href="{% url 'profile' %}">Profile</a>
-              </li>
-              <li class="nav-item">
-                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
-                  {%csrf_token%}
-                  <button class="nav-link active btn btn-danger btn-block" type="submit">Log out</button>
-                </form>
-              </li>
-                <li class="nav-item">
-                    <a class="nav-link active btn btn-info btn-block text-dark" href="{% url 'cart_detail' %}">Cart</a>
-                </li>
-              {%else%}
-              <li class="nav-item">
-                <a class="nav-link active btn btn-success btn-block" href="{% url 'login' %}">Log in</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active btn btn-info btn-block text-dark" href="{% url 'register' %}">Register</a>
-              </li>
-              {% endif %}
-              <li class="nav-item">
-                <a class="nav-link active btn btn-secondary btn-block" href="{% url 'home' %}">Home</a>
-              </li>
-            </ul>
-          </div>
+            <a class="navbar-brand tag-text" href="{% url 'home' %}"><h1>My Shop</h1></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="gap:10px">
+                  <li class="nav-item">
+                      <a class="nav-link btn btn-secondary" href="{% url 'home' %}"><h4>Home</h4></a>
+                  </li>
+                  {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{% url 'profile' %}"><h4>Profile</h4></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-info" href="{% url 'cart_detail' %}"><h4>Cart</h4></a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                            {%csrf_token%}
+                            <button class="nav-link btn btn-danger" type="submit"><h4>Log out</h4></button>
+                        </form>
+                    </li>
+                    {%else%}
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-success" href="{% url 'login' %}"><h4>Log in</h4></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-info" href="{% url 'register' %}"><h4>Register</h4></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
     <!--nav end-->
     <!-- Main Content -->
     <div class="content flex-fill">
         {% block content %}
-        <div class="container mt-5">
-            <h2>Welcome to My Shop</h2>
-            <p>Your gateway to comfort and luxury.</p>
+        <div class="container text-center py-5">
+            <h2 class="display-5 fw-bold">Welcome to My Shop</h2>
+            <p class="lead">Your gateway to comfort and luxury.</p>
         </div>
         {% endblock %}
     </div>
 
-    <footer class="footer bg-dark text-white text-center mt-auto">
+    <footer class="footer mt-auto">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h5 class="footer-title">Developed By Shihab <sup>&copy; 2025</sup></h5>
-                    <p class="footer-text">Quality Products at Your Fingertips, Our Commitment to Excellence, Stay Tuned for More!</p>
-                    <a class="btn design-btn" onclick="scrollToTop()">Go Top</a>
-                    <h4 class="tag-text">
-                        Things are available just for a click away
-                        <span style="font-size: 1.5em; vertical-align: middle; color: white; display: inline-block; transform: rotate(-45deg);">&#x2192;</span>
-                    </h4>
-                </div>
-            </div>
+            <h5 class="footer-title">Backend Developed By Shihab <sup>&copy; 2025</sup></h5>
+            <p class="footer-text">Quality Products at Your Fingertips, Our Commitment to Excellence, Stay Tuned for More!</p>
+            <a class="btn design-btn" onclick="scrollToTop()">Go Top</a>
+            <h4 class="tag-text">
+                Things are available just for a click away
+                <span style="font-size: 1.5em; vertical-align: middle; color: white; display: inline-block; transform: rotate(-45deg);">&#x2192;</span>
+            </h4>
         </div>
     </footer>
 

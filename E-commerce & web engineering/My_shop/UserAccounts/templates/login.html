@@ -1,38 +1,117 @@
 {% extends 'base.html' %}
 {% block content %}
-{%load static%}
-{% load crispy_forms_tags %}
-
-<div class="container p-5" style="width:50%; margin:auto;">
-
-    <div class="container2 p-2">
-        {%if messages%}
-            {%for m in messages%}
-            <h4 class="text-{{m.tags}} bg-white text-center p-1" style="border-radius:7px;">{{m}}</h4>
-            {%endfor%}
-        {%endif%}
-    </div>
-
-    <div class="card text-center m-5 p-3">
-        <div class="card-header">Login</div>
-        <div class="card-body">
-            <h5 class="card-title">Provide Information To Login</h5>
-            <div class="card-body">
-                <form method="post" novalidate>
-                    {% csrf_token %}
-                    
-                    {% for field in form %}
-                        <div class="mb-3">
-                            {{ field|as_crispy_field }}
-                        </div>
-                    {% endfor %}
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+<style>
+  .login-bg {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  .login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .input-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .login-box label {
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+    display: block;
+  }
+  .login-box input {
+    width: 100%;
+    padding: 12px 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+  .login-box input:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 6px rgba(102, 126, 234, 0.5);
+  }
+  .login-box button[type="submit"] {
+    width: 100%;
+    background-color: #667eea;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+  }
+  .login-box button:hover {
+    background-color: #5a67d8;
+  }
+  .login-box p {
+    text-align: center;
+    margin-top: 15px;
+    color: #888;
+  }
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  @media (max-width: 480px) {
+    .login-box {
+      padding: 30px 20px;
+    }
+  }
+</style>
+<div class="login-bg">
+  <div class="login-box">
+    <h2>Login</h2>
+    {% if form.non_field_errors %}
+      <div class="error-message">
+        {% for error in form.non_field_errors %}{{ error }}<br>{% endfor %}
+      </div>
+    {% endif %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="input-container">
+        <label for="id_username">Username*</label>
+        {{ form.username }}
+        {% for error in form.username.errors %}<div class="error-message">{{ error }}</div>{% endfor %}
+      </div>
+      <div class="input-container" style="position:relative;">
+        <label for="id_password">Password*</label>
+        {{ form.password }}
+        <button type="button" class="toggle-password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:#888;padding-top:15%;" onclick="togglePassword()">👁</button>
+        {% for error in form.password.errors %}<div class="error-message">{{ error }}</div>{% endfor %}
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}" style="color:#667eea; text-decoration:none;">Sign up</a></p>
+  </div>
 </div>
-
-{%endblock%}
+<script>
+  function togglePassword() {
+    const passwordField = document.getElementById('id_password');
+    const toggleBtn = document.querySelector('.toggle-password');
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      toggleBtn.textContent = '🙈';
+    } else {
+      passwordField.type = 'password';
+      toggleBtn.textContent = '👁';
+    }
+  }
+</script>
+{% endblock %}
