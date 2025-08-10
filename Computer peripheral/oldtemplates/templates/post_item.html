@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h1>Post Found Item</h1>
+    
+    <form method="post" style="background: #f9f9f9; padding: 20px; border-radius: 10px;">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Item Name:</label>
+            <input type="text" name="item_name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Description:</label>
+            <textarea name="description" rows="3" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;"></textarea>
+        </div>
+        
+        <h3>Security Questions (for verification)</h3>
+        <p style="color: #666; margin-bottom: 20px;">Set 2 questions that only the real owner would know the answer to.</p>
+        
+        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+            <h4>Question 1:</h4>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Question:</label>
+                <input type="text" name="mcq_1_question" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="e.g., What color is this item?">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Correct Answer:</label>
+                <input type="text" name="mcq_1_answer_correct" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Wrong Answer 1:</label>
+                <input type="text" name="mcq_1_answer_incorrect_1" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Wrong Answer 2:</label>
+                <input type="text" name="mcq_1_answer_incorrect_2" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Wrong Answer 3:</label>
+                <input type="text" name="mcq_1_answer_incorrect_3" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+        </div>
+        
+        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <h4>Question 2:</h4>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Question:</label>
+                <input type="text" name="mcq_2_question" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="e.g., Where did you last use this item?">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Correct Answer:</label>
+                <input type="text" name="mcq_2_answer_correct" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Wrong Answer 1:</label>
+                <input type="text" name="mcq_2_answer_incorrect_1" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Wrong Answer 2:</label>
+                <input type="text" name="mcq_2_answer_incorrect_2" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Wrong Answer 3:</label>
+                <input type="text" name="mcq_2_answer_incorrect_3" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+            </div>
+        </div>
+        
+        <button type="submit" style="background: #28a745; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Post Item</button>
+        <a href="{% url 'home' %}" style="margin-left: 10px; color: #007bff; text-decoration: none;">Cancel</a>
+    </form>
+</div>
+{% endblock %}

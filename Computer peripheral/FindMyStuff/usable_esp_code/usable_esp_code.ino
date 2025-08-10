@@ -5,12 +5,12 @@
 #include <ArduinoJson.h>
 
 // WiFi credentials
-const char* ssid = "No_internet";
-const char* password = "(CSE_904)";
+const char* ssid = "Nokia 3310";
+const char* password = "@123@123";
 
 // Server URLs
-const char* userOtpURL = "http://192.168.0.105:8000/api/esp32/verify-user-otp/";
-const char* adminPasswordURL = "http://192.168.0.105:8000/api/esp32/verify-admin-password/";
+const char* userOtpURL = "http://172.20.10.2:8000/api/esp32/verify-user-otp/";
+const char* adminPasswordURL = "http://172.20.10.2:8000/api/esp32/verify-admin-password/";
 
 Servo lock_servo1;
 Servo lock_servo2;

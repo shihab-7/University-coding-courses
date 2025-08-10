@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    <div style="margin-bottom: 30px;">
+        <a href="{% url 'post_item' %}" class="btn btn-primary">Post Found Item</a>
+    </div>
+
+    <h2>Available Items to Claim ({{ unclaimed_items.count }})</h2>
+    
+    {% if unclaimed_items %}
+        <div style="display: grid; gap: 20px; margin-bottom: 40px;">
+            {% for item in unclaimed_items %}
+            <div class="card">
+                <h3>{{ item.item_name }}</h3>
+                <p><strong>Posted:</strong> {{ item.date_registered|date:"M d, Y" }}</p>
+                <p><strong>Status:</strong> <span style="color: #28a745;">{{ item.status }}</span></p>
+                <a href="{% url 'claim_item' item.id %}" class="btn btn-success"> Claim This Item</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <p style="margin: 0;">No unclaimed items currently available.</p>
+        </div>
+    {% endif %}
+
+    <h2>Claimed Items ({{ claimed_items.count }})</h2>
+    <p style="color: #666; margin-bottom: 20px;">These items have been claimed. You can report issues if needed.</p>
+    {% if claimed_items %}
+        <div style="display: grid; gap: 20px;">
+            {% for item in claimed_items %}
+            <div class="card" style="background: #f8f9fa;">
+                <h3>{{ item.item_name }}</h3>
+                <p><strong>Description:</strong> {{ item.description|default:"No description provided" }}</p>
+                <p><strong>Posted:</strong> {{ item.date_registered|date:"M d, Y" }}</p>
+                <p><strong>Status:</strong> <span style="color: #6c757d;">{{ item.status }}</span></p>
+                <a href="{% url 'report_issue' item.id %}" class="btn btn-danger">Report Issue</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No claimed items to display.</p>
+    {% endif %}
+{% endblock %}

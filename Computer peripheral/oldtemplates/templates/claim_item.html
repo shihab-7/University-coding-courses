@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h1>Claim Item: {{ item.item_name }}</h1>
+    
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <p><strong>Description:</strong> {{ item.description|default:"No description provided" }}</p>
+        <p><strong>Posted:</strong> {{ item.date_registered|date:"M d, Y" }}</p>
+    </div>
+    
+    <div id="verification-form" style="background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px;">
+        <h3>Verify Your Identity</h3>
+        <p>Answer the security questions to prove you're the owner:</p>
+        
+        <form id="claimForm">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Student ID:</label>
+                <input type="text" id="student_id" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="Format: XX-X-XX-XX-XXXXXX (e.g., CS-A-21-02-123456)" pattern="[A-Z]{2}-[A-Z]-\d{2}-\d{2}-\d{6}" title="Please enter a valid student ID in format: XX-X-XX-XX-XXXXXX">
+                <small style="color: #666; font-size: 12px;">Expected format: CS-A-21-02-123456</small>
+            </div>
+            
+            <div style="margin-bottom: 20px; background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: bold;">{{ mcq_1.question }}</label>
+                {% for option in mcq_1.options %}
+                <div style="margin-bottom: 5px;">
+                    <input type="radio" name="answer_1" value="{{ option }}" id="q1_{{ forloop.counter }}" required>
+                    <label for="q1_{{ forloop.counter }}" style="margin-left: 5px;">{{ option }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div style="margin-bottom: 20px; background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: bold;">{{ mcq_2.question }}</label>
+                {% for option in mcq_2.options %}
+                <div style="margin-bottom: 5px;">
+                    <input type="radio" name="answer_2" value="{{ option }}" id="q2_{{ forloop.counter }}" required>
+                    <label for="q2_{{ forloop.counter }}" style="margin-left: 5px;">{{ option }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <button type="submit" style="background: #007bff; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Verify & Get OTP</button>
+            <a href="{% url 'home' %}" style="margin-left: 10px; color: #6c757d; text-decoration: none;">Back to Home</a>
+        </form>
+    </div>
+    
+    <div id="result-message" style="margin-top: 20px; padding: 15px; border-radius: 5px; display: none;"></div>
+</div>
+
+<script>
+    // Pass Django variables to JavaScript
+    window.itemId = {{ item.id }};
+</script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

@@ -76,8 +76,9 @@ void loop() {
     Serial.print("Key Pressed: ");
     Serial.println(key);
     
-    digitalWrite(ledPin, 0);  // Turn LED on
-    delay(200);                  // Keep it on for 200 ms
-    digitalWrite(ledPin, 1);   // Turn LED off
+    digitalWrite(ledPin, 1);
+    delay(200);
+       
   }
+  digitalWrite(ledPin, 0);
 }

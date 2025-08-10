@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h1>Report Issue</h1>
+    
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <h3>Item: {{ item.item_name }}</h3>
+        <p><strong>Description:</strong> {{ item.description|default:"No description provided" }}</p>
+        <p><strong>Status:</strong> {{ item.status }}</p>
+    </div>
+    
+    <form method="post" style="background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px;">
+        {% csrf_token %}
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Your Email:</label>
+            <input type="email" name="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="Enter your email address">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Your Phone Number:</label>
+            <input type="text" name="phone_number" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="Enter your phone number">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Describe the issue:</label>
+            <textarea name="issue_text" rows="5" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" placeholder="Please describe the issue with this resolved item..."></textarea>
+        </div>
+
+        
+        <button type="submit" style="background: #dc3545; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Submit Report</button>
+        <a href="{% url 'home' %}" style="margin-left: 10px; color: #6c757d; text-decoration: none;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
