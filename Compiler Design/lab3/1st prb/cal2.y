@@ -8,11 +8,13 @@ int yylex();
 %start cal
 
 %%
+
 cal: | cal line
 
 line: NUM ADD NUM '\n' {$$ = $1 + $3; printf("%d\n", $$);}
     | NUM ADD NUM      {$$ = $1 + $3; printf("%d\n", $$);}
     ;
+
 %%
 
 int main()

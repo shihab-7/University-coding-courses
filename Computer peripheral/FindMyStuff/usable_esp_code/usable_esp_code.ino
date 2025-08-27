@@ -1,25 +1,44 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 #include <Keypad.h>
 #include <ESP32Servo.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
+// OLED display settings
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define SDA_PIN 23
+#define SCL_PIN 22
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+unsigned long pickTimerStart = 0;
+bool showPickTimer = false;
+bool showAdminWelcome = false;
+int pickTimerSeconds = 10;
+bool showTryAgain = false;
+unsigned long tryAgainStart = 0;
+
+
 // WiFi credentials
-const char* ssid = "Nokia 3310";
-const char* password = "@123@123";
+const char* ssid = "No_internet";
+const char* password = "(CSE_904)";
 
 // Server URLs
-const char* userOtpURL = "http://172.20.10.2:8000/api/esp32/verify-user-otp/";
-const char* adminPasswordURL = "http://172.20.10.2:8000/api/esp32/verify-admin-password/";
+const char* userOtpURL = "https://findmystuff.onrender.com/api/esp32/verify-user-otp/";
+const char* adminPasswordURL = "https://findmystuff.onrender.com/api/esp32/verify-admin-password/";
 
 Servo lock_servo1;
 Servo lock_servo2;
 const int servoPin1 = 12;
 const int servoPin2 = 13;
 const int lock_position = 0;
-const int close_position = 0;
+const int close_position = 98;
 const int unlock_position = 90;
-const int open_position = 180;
+const int open_position = 0;
 
 const byte ROWS = 4;
 const byte COLS = 4;
@@ -49,6 +68,19 @@ bool is_empty = false;
 bool is_filled = false;
 
 void setup() {
+  Wire.begin(SDA_PIN, SCL_PIN);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;);
+  }
+
+// dusplay setup
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,10);
+  display.println("OLED Ready!");
+  display.display();
+  delay(1000);
 //  Serial.begin(115200);
 //  Serial.println("Keypad Test Ready");
   pinMode(led_pin1, OUTPUT);
@@ -60,89 +92,116 @@ void setup() {
   
   // Connect to WiFi
   WiFi.begin(ssid, password);
-//  Serial.print("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-//    Serial.print(".");
   }
-//  Serial.println();
-//  Serial.println("WiFi connected!");
-//  Serial.print("IP address: ");
-//  Serial.println(WiFi.localIP());
   
   //servo section
-//  Serial.println("Attaching servos...");
   lock_servo1.attach(servoPin1);
   lock_servo2.attach(servoPin2);
 }
 
 void loop() {
-  char key = keypad.getKey();
-  
+  // Show 'Try Again' message if needed
+  if (showTryAgain) {
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setCursor(0, 20);
+    display.println("Try Again");
+    display.display();
+    if (millis() - tryAgainStart > 1500) {
+      showTryAgain = false;
+      enteredOTP = "";
+    }
+    return;
+  }
+
+  // Show pick timer after user verification
+  if (showPickTimer) {
+    int secondsLeft = pickTimerSeconds - (millis() - pickTimerStart)/1000;
+    if (secondsLeft > 0) {
+      display.clearDisplay();
+      display.setTextSize(1);
+      display.setCursor(0,10);
+      display.println("Pick Item:");
+      display.setTextSize(2);
+      display.setCursor(0,30);
+      display.print(secondsLeft);
+      display.println("s...");
+      display.display();
+    } else {
+      showPickTimer = false;
+      vaultOpen = false;
+      enteredOTP = "";
+    }
+    return;
+  }
+
+  // Show admin welcome
+  if (showAdminWelcome) {
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setCursor(0,20);
+    display.println("Welcome");
+    display.setCursor(0,40);
+    display.println("Admin");
+    display.display();
+    delay(2000);
+    showAdminWelcome = false;
+    enteredOTP = "";
+    return;
+  }
+
+  // Always show Enter OTP prompt when idle
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setCursor(0,10);
+  display.println("Enter OTP:");
+  display.setTextSize(2);
+  display.setCursor(0,30);
+  display.println(enteredOTP);
+  display.display();
+
   //password validation
+  char key = keypad.getKey();
   if (key) {
 //    Serial.print("Key Pressed: ");
 //    Serial.println(key);
     digitalWrite(led_pin1, 1);
-    
-    if (key >= '0' && key <= '9') 
-    {
-      // Limit input to maxUserOTPLength
-      if (enteredOTP.length() < maxUserOTPLength) 
-      {
+    if (key >= '0' && key <= '9') {
+      if (enteredOTP.length() < maxUserOTPLength) {
         enteredOTP += key;
-//        Serial.print("OTP: ");
-        for (int i = 0; i < enteredOTP.length(); i++) 
-        {
-//          Serial.print("*");
-        }
-//        Serial.println();
         // Auto-submit only for 5-digit user OTP
         if (enteredOTP.length() == maxUserOTPLength) {
           verifyOTP(enteredOTP);
           enteredOTP = "";
         }
-        // For admin password (3 digits), require manual submit with '#'
       }
-    }
-    else if (key == '*') 
-    {
+    } else if (key == '*') {
       enteredOTP = "";
-//      Serial.println("OTP cleared");
-    }
-    else if (key == '#') 
-    {
-      if (enteredOTP.length() > 0) 
-      {
-//        Serial.println("Submitting code: " + enteredOTP);
+    } else if (key == '#') {
+      if (enteredOTP.length() > 0) {
         verifyOTP(enteredOTP);
         enteredOTP = "";
       }
     }
   }
-  
-  if (vaultOpen && (millis() - openTime > openDuration)) 
-  {
+
+  if (vaultOpen && (millis() - openTime > openDuration)) {
     close_vault();
   }
 
   delay(200);
   digitalWrite(led_pin1, 0);
-  
-  if(is_empty == true)
-  {
+
+  if(is_empty == true) {
     digitalWrite(led_pin3, 1);
-  }
-  else
-  {
+  } else {
     digitalWrite(led_pin3, 0);
   }
-  if(is_filled == true)
-  {
+  if(is_filled == true) {
     digitalWrite(led_pin2, 1);
-  }
-  else
-  {
+  } else {
     digitalWrite(led_pin2, 0);
   }
 }
@@ -209,19 +268,16 @@ void verifyUserOTP(String otp) {
       
       if (httpResponseCode == 200 && responseDoc["success"]) {
         // User verified successfully
-        String message = responseDoc["message"];
-        String itemName = responseDoc["item_name"];
-        
-//        Serial.println("Ok " + message);
-//        Serial.println("Item: " + itemName);
-        
-        // User collected item
         is_empty = true;
         is_filled = false;
         open_vault();
+        // Start pick timer on OLED
+        showPickTimer = true;
+        pickTimerStart = millis();
       } else {
-        String error = responseDoc["error"];
-//        Serial.println("User OTP: " + error);
+        // Show 'Try Again' on OLED
+        showTryAgain = true;
+        tryAgainStart = millis();
       }
     } else {
 //      Serial.println("Error: HTTP " + String(httpResponseCode));
@@ -260,22 +316,19 @@ void verifyAdminPassword(String password) {
       
       if (httpResponseCode == 200 && responseDoc["success"]) {
         // Admin verified successfully
-        String message = responseDoc["message"];
-        
-//        Serial.println("Ok " + message);
-        
-        // Admin refilled vault
         is_empty = false;
         is_filled = true;
         open_vault();
+        // Show admin welcome on OLED
+        showAdminWelcome = true;
       } else {
-        String error = responseDoc["error"];
-//        Serial.println("Admin Password: " + error);
+        // Show 'Try Again' on OLED
+        showTryAgain = true;
+        tryAgainStart = millis();
       }
     } else {
 //      Serial.println("Error: HTTP " + String(httpResponseCode));
     }
-    
     http.end();
   } else {
 //    Serial.println("WiFi not connected");

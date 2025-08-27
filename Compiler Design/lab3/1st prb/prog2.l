@@ -1,5 +1,4 @@
 %option noyywrap
-
 %{
 
 %}
@@ -12,6 +11,7 @@ num {digit}{digit}*
 float_num {num}*[.]{num}
 
 %%
+
 {num} {printf("%s -> NUMBER\n", yytext);}
 "+" {printf("%s -> ADD\n", yytext);}
 "int" {printf("%s -> INT\n", yytext);}
@@ -26,6 +26,7 @@ float_num {num}*[.]{num}
 ({under}|{letter})({under}|{letter}|{digit})* {printf("%s -> ID\n", yytext);}
 {float_num} {printf("%s -> FLOAT_NUM\n", yytext);}
 {delim} {}
+
 %%
 
 int main()
